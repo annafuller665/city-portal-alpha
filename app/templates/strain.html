@@ -1,0 +1,67 @@
+{% extends "base.html" %} 
+{% block content %} 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $("#data").DataTable({
+                searching: true,
+                paging: false,
+                ordering: false,
+                info: false,
+                ajax: {
+                    url: "/lifespan/strain/data",
+                    dataSrc: ""
+                },
+                columns: [
+                    { data: "strain_id" },
+                    { data: "strain_name" },
+                    { data: "species_name" },
+                ],
+                columnDefs: [
+                    {
+                        targets: [0],
+                        visible: false,
+                    }
+                ],
+                // Customizing table format
+                dom: "Bfrtip",
+                buttons: [
+                    "copy",
+                    "csv",
+                    "excel",
+                    "pdf",
+                    "print"
+                ],
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: true,
+            });
+
+            table.on("select deselect", function () {
+                var selectedRows = table.rows({ selected: true }).count();
+                table.button(2).enable(selectedRows > 0);
+                table.button(3).enable(selectedRows > 0);
+            });
+        });
+    </script>
+
+    <style>
+        .custom-search-bar {
+            text-align: left;
+            margin-left: 10px; /* Adjust the value as needed */
+            margin-top: 10px; /* Adjust the value as needed */
+        }
+    </style>
+
+    <div id="main">
+        <table id="data" class="display compact nowrap" width="100%" style="font-family: 'Arial Narrow', Arial, sans-serif;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Strain name</th>
+                    <th>Species name</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+{% endblock %}

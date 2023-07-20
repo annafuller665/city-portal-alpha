@@ -1,0 +1,55 @@
+{% extends "base.html" %} 
+{% block content %} 
+<head>
+<title>Page Title</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0; /* Remove default margin to prevent unnecessary space */
+  }
+
+
+  /* Set the maximum width and height of the image */
+  img {
+      max-width: 500px;
+      max-height: 300px;
+  }
+
+
+  /* Style the paragraph directly */
+  p {
+      max-width: 900px; /* Set the maximum width for the paragraph */
+      text-align: justify; /* Justify the text for a cleaner look */
+      margin: 40px; /* Add some margin around the paragraph */
+      line-height: 2.5; /* Set line-height to achieve double spacing */
+      font-size: 20px; /* Set the font size to 20 pixels */
+  }
+</style>
+</head>
+<body>
+
+<h1>Welcome to CITP Data Portal</h1>
+<img src="{{ url_for('static', filename='citp_logo.png') }}" alt="Portal logo">
+<p>The discovery of conserved genetic pathways whose manipulation 
+  via genetics and diet can lead to tremendous increases in lifespan, 
+  stress resistance, and prolonged health in a variety of different 
+  animals raises the prospect that pharmacological agents can be 
+  identified to achieve the same outcomes. A number of potential 
+  candidates have already been identified, but recent work in mice 
+  indicates that specific drug effects may be highly dependent on 
+  genetic background.
+  The Caenorhabditis Intervention Testing Program (CITP) addresses 
+  this concern by creating a consortium of labs (based at the Buck 
+  Institute for Research on Aging, Rutgers University, and the 
+  University of Oregon) to systematically test a broad array of 
+  bioactive compounds for their effects on longevity and other 
+  biomarkers of aging across a broad set of nematode strains and 
+  species. Our collaborative research team has developed innovative 
+  approaches that allow a variety of high-throughput, high-precision 
+  assays of lifespan and healthspan. The data portal provides access 
+  to manual and ALM lifespan data published by the CITP.</p>
+  
+</body>
+{% endblock %}

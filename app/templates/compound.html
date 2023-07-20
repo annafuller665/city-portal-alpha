@@ -1,0 +1,57 @@
+{% extends "base.html" %} {% block content %}
+<script type="text/javascript">
+    $(document).ready(function () {
+        var table = $("#data").DataTable({
+            searching: true,
+            paging: false,
+            ordering: false,
+            info: false,
+            ajax: {
+                url: "/lifespan/comp/data",
+                dataSrc: ""
+            },
+            columns: [
+                { data: "comp_name" },
+                { data: "comp_abbr" },
+                { data: "alternate_comp_names" },
+                { data: "control_name" },
+                {
+                    data: "comp_name",
+                    render: function (data, type, row, meta) {
+                        if (type === "display") {
+                            data = '<button type="button" class="btn btn-primary btn-sm" onclick="window.location.href=\'/lifespan/search/' + data + '\'"><i class="fas fa-search"></i><sup><small><i class="fas fa-plus"></i></small></sup></button>';
+                        }
+                        return data;
+                    },
+                    className: "text-center"
+                }
+            ],
+            columnDefs: [
+                {
+                    targets: [2],
+                    visible: false,
+                }
+            ]
+        });
+        table.on("select deselect", function () {
+            var selectedRows = table.rows({ selected: true }).count();
+            table.button(2).enable(selectedRows > 0);
+            table.button(3).enable(selectedRows > 0);
+            table.button(4).enable(selectedRows > 0);
+        });
+    });
+</script>
+<div id="main">
+    <table id="data" class="display compact nowrap" width="33%">
+        <thead>
+            <tr>
+                <th>Compound Name</th>
+                <th>Abbreviation</th>
+                <th>Alternate Names</th>
+                <th>Control Compound</th>
+                <th>Find Data</th>
+            </tr>
+        </thead>
+    </table>
+</div>
+{% endblock %}

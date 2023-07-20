@@ -1,0 +1,91 @@
+{% extends "base.html" %} 
+{% block content %} 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $("#data").DataTable({
+                searching: true,
+                paging: false,
+                ordering: false,
+                info: false,
+                ajax: {
+                    url: "/lifespan/pub/data",
+                    dataSrc: ""
+                },
+                columns: [
+                    { data: "manuscript_id" },
+                    { data: "author" },
+                    {
+                        data: "doi",
+                        render: function (data, type, row, meta) {
+                            if (type === "display") {
+                                data = '<a href="https://www.doi.org/' + data + '">' + row.journal + '</a>';
+                            }
+                            return data;
+                        },
+                    },
+                    { data: "year" },
+                    { data: "study_phase" },
+                ],
+                columnDefs: [
+                    {
+                        targets: [0],
+                        visible: false,
+                    }
+                ],
+                // Customizing table format
+                dom: "Bfrtip",
+                buttons: [
+                    "copy",
+                    "csv",
+                    "excel",
+                    "pdf",
+                    "print"
+                ],
+                lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
+                scrollX: true,
+                scrollCollapse: true,
+                autoWidth: true,
+            });
+
+            table.on("select deselect", function () {
+                var selectedRows = table.rows({ selected: true }).count();
+                table.button(2).enable(selectedRows > 0);
+                table.button(3).enable(selectedRows > 0);
+                table.button(4).enable(selectedRows > 0);
+            });
+        });
+    </script>
+
+    <style>
+    .custom-search-bar {
+        text-align: left;
+        margin-left: 10px; /* Adjust the value as needed */
+        margin-top: 10px; /* Adjust the value as needed */
+    }
+
+    /* Add this part to incorporate the scrolling */
+    div.dataTables_wrapper {
+        width: 800px; /* Set the desired width for the table */
+        margin: 0 auto; /* Center the table on the page */
+    }
+    </style>
+
+<div id="main">
+    <div class="table-responsive">
+        <!-- Add the wrapper class to this div -->
+        <div class="dataTables_wrapper">
+            <table id="data" class="display compact nowrap" width="100%" style="font-family: 'Arial Narrow', Arial, sans-serif;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Author</th>
+                        <th>Title</th>
+                        <th>Year</th>
+                        <th>Phase</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
